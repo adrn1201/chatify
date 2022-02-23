@@ -1,6 +1,13 @@
 const path = require('path');
+const http = require('http');
 const express = require('express');
+const { Server } = require("socket.io");
 const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server);
+
+
 const ejsMate = require('ejs-mate');
 const port = process.env.PORT || 3000;
 
@@ -14,6 +21,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.listen(port, () => {
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+
+server.listen(port, () => {
     console.log(`Serving on port ${port}!`);
 });
