@@ -19,6 +19,7 @@
     },
     "homepage": "https://github.com/adrn1201/live-chat-app#readme",
     "dependencies": {
+        "bad-words": "^3.0.4",
         "ejs": "^3.1.6",
         "ejs-mate": "^3.0.0",
         "express": "^4.17.3",

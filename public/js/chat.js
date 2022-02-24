@@ -9,7 +9,12 @@ socket.on('message', (message) => {
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     message = e.target.elements.message;
-    socket.emit('sendMessage', message.value);
+    socket.emit('sendMessage', message.value, (error) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message delivered!');
+    });
     message.value = '';
 });
 
@@ -20,7 +25,9 @@ locationButton.addEventListener('click', () => {
 
     navigator.geolocation.getCurrentPosition((pos) => {
         const { latitude, longitude } = pos.coords;
-        socket.emit('sendLocation', { latitude, longitude });
+        socket.emit('sendLocation', { latitude, longitude }, () => {
+            console.log('Location shared!');
+        });
     }, (err) => {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }, { enableHighAccuracy: true });
