@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate') %>
+    <div class="chat">
+        <div class="chat__sidebar">
+
+        </div>
+        <div class="chat__main">
+            <div id="messages" class="chat__messages"></div>
+
+            <div class="compose">
+                <form id="message-form">
+                    <input type="text" name="message" placeholder="Message">
+                    <button id="submit">Send</button>
+                </form>
+                <button id="send-location">Send Location</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script id="message-template" type="text/html">
+        <div class="message">
+            <p>
+                <span class="message__name">Some User name</span>
+                <span class="message__meta">{{createdAt}}</span>
+            </p>
+            <p>{{createdAt}} - {{message}}</p>
+        </div>
+    </script>
+
+    <script id="location-message-template" type="text/html">
+        <div class="message">
+            <p>
+                <span class="message__name">Some User name</span>
+                <span class="message__meta">{{createdAt}}</span>
+            </p>
+            <p><a href="{{url}}" target="_blank">My current location</a></p>
+        </div>
+    </script>
+
+    <script src="/js/mustache.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>

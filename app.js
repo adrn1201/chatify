@@ -22,6 +22,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/chat', (req, res) => {
+    res.render('chat');
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
