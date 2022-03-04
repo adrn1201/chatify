@@ -8,6 +8,8 @@ const messagesDiv = document.querySelector('#messages');
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
 
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+
 socket.on('message', (message) => {
     console.log(message);
     const { text, createdAt } = message;
@@ -65,3 +67,5 @@ locationButton.addEventListener('click', function() {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }, { enableHighAccuracy: true });
 });
+
+socket.emit('join', { username, room });
