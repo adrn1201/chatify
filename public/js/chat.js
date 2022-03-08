@@ -5,6 +5,7 @@ const messageFormButton = document.querySelector('#submit');
 const locationButton = document.querySelector('#send-location');
 const messagesDiv = document.querySelector('#messages');
 const sidebar = document.querySelector('#sidebar');
+const leaveBtn = document.querySelector('#leave-room');
 
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
@@ -22,13 +23,10 @@ const autoScroll = () => {
     const visibleHeight = messagesDiv.offsetHeight;
     const containerHeight = messagesDiv.scrollHeight;
 
-    const scrollOffset = messages.scrollTop + visibleHeight;
-
-    console.log(containerHeight - newMessageHeight)
-    console.log(scrollOffset);
+    const scrollOffset = messagesDiv.scrollTop + visibleHeight;
 
     if (containerHeight - newMessageHeight <= scrollOffset) {
-        messages.scrollTop = messages.scrollHeight;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 }
 
@@ -53,7 +51,7 @@ socket.on('locationMessage', (message) => {
         createdAt: moment(createdAt).format('h:mm a')
     });
     messagesDiv.insertAdjacentHTML('beforeend', html);
-    autoScroll;
+    autoScroll();
 });
 
 socket.on('roomData', ({ room, users }) => {
@@ -104,4 +102,21 @@ socket.emit('join', { username, room }, (error) => {
         alert(error)
         location.href = '/'
     }
+});
+
+
+leaveBtn.addEventListener('click', () => {
+    swal({
+            title: "Are you sure?",
+            text: "Are you sure you want to leave the room?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                location.href = '/';
+            }
+        });
+
 });

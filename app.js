@@ -11,6 +11,7 @@ const ejsMate = require('ejs-mate');
 const Filter = require('bad-words');
 const { generateMessage, generateLocationMessage } = require('./utils/messages');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users');
+const { roomDetails } = require('./middleware');
 const port = process.env.PORT || 3000;
 
 app.engine('ejs', ejsMate);
@@ -19,11 +20,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use((req, res, next) => {
+    res.locals.path = req.path;
+    next();
+});
+
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/chat', (req, res) => {
+app.get('/chat', roomDetails, (req, res) => {
     res.render('chat');
 });
 
