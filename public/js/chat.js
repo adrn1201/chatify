@@ -78,9 +78,10 @@ messageForm.addEventListener('submit', function(e) {
 });
 
 
-locationButton.addEventListener('click', function() {
+locationButton.addEventListener('click', async function() {
     if (!navigator.geolocation) {
-        return alert('Geolocation is not supported by your browser.');
+        const err = await swal('Geolocation is not supported by your browser.');
+        if (err) return;
     }
 
     this.setAttribute('disabled', '');
@@ -97,26 +98,20 @@ locationButton.addEventListener('click', function() {
     }, { enableHighAccuracy: true });
 });
 
-socket.emit('join', { username, room }, (error) => {
+socket.emit('join', { username, room }, async(error) => {
     if (error) {
-        alert(error)
-        location.href = '/'
+        const err = await swal(error);
+        err ? location.href = '/' : ''
     }
 });
 
 
-leaveBtn.addEventListener('click', () => {
-    swal({
-            title: "Are you sure?",
-            text: "Are you sure you want to leave the room?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                location.href = '/';
-            }
-        });
+leaveBtn.addEventListener('click', async() => {
+    const choice = await swal("Are you sure you want to leave?", {
+        buttons: ["Cancel", "Leave"],
+    });
 
+    if (choice) {
+        location.href = '/'
+    }
 });

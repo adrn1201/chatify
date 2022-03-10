@@ -21,7 +21,8 @@ body {
 }
 
 #join-btn {
-    background: #7C5CBF;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(86, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 }
 
 #join-btn:hover {
@@ -45,7 +46,7 @@ body {
     box-shadow: 0px 0px 17px 1px black;
     background: #F7F7FA;
     padding: 24px;
-    width: 250px;
+    width: 300px;
 }
 
 .centered-form button {
