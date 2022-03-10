@@ -12,15 +12,37 @@
     />
 
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
     <% if(path === '/'){ %>
         <link rel="stylesheet" href="/css/join.css">
         <% }else{ %>
+            <style>
+                .bd-placeholder-img {
+                    font-size: 1.125rem;
+                    text-anchor: middle;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    user-select: none;
+                }
+                
+                @media (min-width: 768px) {
+                    .bd-placeholder-img-lg {
+                        font-size: 3.5rem;
+                    }
+                }
+            </style>
+            <link href="/css/sidebars.css" rel="stylesheet">
             <link rel="stylesheet" href="/css/chat.css">
             <% } %>
 </head>
 
 <body>
     <%- body %>
+        <script src="/js/bootstrap.bundle.min.js "></script>
 </body>
 
 </html>

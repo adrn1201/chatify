@@ -1,4 +1,4 @@
-# live-chat-app
+# Chatify
 
 A web application that uses Web sockets to chat with connected clients in real-time.
 

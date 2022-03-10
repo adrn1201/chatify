@@ -5,11 +5,14 @@ const messageFormButton = document.querySelector('#submit');
 const locationButton = document.querySelector('#send-location');
 const messagesDiv = document.querySelector('#messages');
 const sidebar = document.querySelector('#sidebar');
+const roomName = document.querySelector('#room-name');
+const usersList = document.querySelector('#users-collapse');
 const leaveBtn = document.querySelector('#leave-room');
 
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
-const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML;
+const roomSideTemplate = document.querySelector('#room-sidebar-template').innerHTML;
+const userSideTemplate = document.querySelector('#users-sidebar-template').innerHTML;
 
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
@@ -55,8 +58,10 @@ socket.on('locationMessage', (message) => {
 });
 
 socket.on('roomData', ({ room, users }) => {
-    const html = Mustache.render(sidebarTemplate, { room, users });
-    sidebar.innerHTML = html;
+    const roomHtml = Mustache.render(roomSideTemplate, { room });
+    roomName.innerHTML = roomHtml;
+    const usersHtml = Mustache.render(userSideTemplate, { users });
+    usersList.innerHTML = usersHtml;
 });
 
 messageForm.addEventListener('submit', function(e) {
