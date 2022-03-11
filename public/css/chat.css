@@ -152,15 +152,3 @@ body {
     font-weight: 300;
     padding: 12px 24px 0 24px;
 }
-
-.leave-btn {
-    position: absolute;
-    margin-left: 2%;
-    bottom: 3%;
-}
-
-@media (max-width: 450px) {
-    .leave-btn {
-        width: 5em;
-    }
-}
