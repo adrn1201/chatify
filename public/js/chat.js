@@ -6,6 +6,7 @@ const locationButton = document.querySelector('#send-location');
 const messagesDiv = document.querySelector('#messages');
 const sidebar = document.querySelector('#sidebar');
 const roomName = document.querySelector('#room-name');
+const messageInput = document.querySelector('#message');
 const usersList = document.querySelector('#users-collapse');
 const leaveBtn = document.querySelector('#leave-room');
 
@@ -15,6 +16,9 @@ const roomSideTemplate = document.querySelector('#room-sidebar-template').innerH
 const userSideTemplate = document.querySelector('#users-sidebar-template').innerHTML;
 
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+
+let count = 0;
+let typingFeedback = '';
 
 const autoScroll = () => {
     const newMessage = messagesDiv.lastElementChild;
@@ -68,6 +72,23 @@ socket.on('roomData', ({ room, users }) => {
     usersList.innerHTML = usersHtml;
 });
 
+messageInput.addEventListener('input', (e) => {
+    socket.emit('typing', username, () => {
+        console.log('data typing sent!');
+    });
+});
+
+socket.on('typingUser', (user) => {
+    if (username !== user && count === 0) {
+        const p = document.createElement('p');
+        p.innerText = `${user} is typing`;
+        p.setAttribute('id', 'typingUser');
+        messagesDiv.append(p);
+        typingFeedback = p;
+        count = 1;
+    }
+});
+
 messageForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -78,7 +99,6 @@ messageForm.addEventListener('submit', function(e) {
         messageFormButton.removeAttribute('disabled');
         message.value = '';
         message.focus();
-
         if (error) {
             return console.log(error);
         }
@@ -116,8 +136,8 @@ socket.emit('join', { username, room }, async(error) => {
 
 
 leaveBtn.addEventListener('click', async() => {
-    const choice = await swal("Are you sure you want to leave?", {
-        buttons: ["Cancel", "Leave"],
+    const choice = await swal(`Are you sure you want to leave ${room}?`, {
+        buttons: ['Cancel', 'Leave'],
     });
 
     if (choice) {
