@@ -54,11 +54,14 @@ socket.on('message', (message) => {
 });
 
 socket.on('locationMessage', (message) => {
-    const { username, url, createdAt } = message;
+    let sender = ''
+    if (username) {
+        sender = username === message.username ? '(You)' : '';
+    }
     const html = Mustache.render(locationMessageTemplate, {
-        username,
-        url,
-        createdAt: moment(createdAt).format('h:mm a')
+        username: `${message.username} ${sender}`,
+        url: message.url,
+        createdAt: moment(message.createdAt).format('h:mm a')
     });
     messagesDiv.insertAdjacentHTML('beforeend', html);
     autoScroll();
