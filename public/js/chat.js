@@ -41,7 +41,7 @@ socket.on('message', (message) => {
     let sender = ''
 
     if (username) {
-        sender = username === message.username ? '(You)' : '';
+        sender = username.toLowerCase() === message.username ? '(You)' : '';
     }
 
     const html = Mustache.render(messageTemplate, {
@@ -56,7 +56,7 @@ socket.on('message', (message) => {
 socket.on('locationMessage', (message) => {
     let sender = ''
     if (username) {
-        sender = username === message.username ? '(You)' : '';
+        sender = username.toLowerCase() === message.username ? '(You)' : '';
     }
     const html = Mustache.render(locationMessageTemplate, {
         username: `${message.username} ${sender}`,
