@@ -54,7 +54,6 @@ socket.on('message', (message) => {
 });
 
 socket.on('locationMessage', (message) => {
-    console.log(message);
     const { username, url, createdAt } = message;
     const html = Mustache.render(locationMessageTemplate, {
         username,
@@ -70,23 +69,6 @@ socket.on('roomData', ({ room, users }) => {
     roomName.innerHTML = roomHtml;
     const usersHtml = Mustache.render(userSideTemplate, { users });
     usersList.innerHTML = usersHtml;
-});
-
-messageInput.addEventListener('input', (e) => {
-    socket.emit('typing', username, () => {
-        console.log('data typing sent!');
-    });
-});
-
-socket.on('typingUser', (user) => {
-    if (username !== user && count === 0) {
-        const p = document.createElement('p');
-        p.innerText = `${user} is typing`;
-        p.setAttribute('id', 'typingUser');
-        messagesDiv.append(p);
-        typingFeedback = p;
-        count = 1;
-    }
 });
 
 messageForm.addEventListener('submit', function(e) {
@@ -105,7 +87,6 @@ messageForm.addEventListener('submit', function(e) {
         console.log('Message delivered!');
     });
 });
-
 
 locationButton.addEventListener('click', async function() {
     if (!navigator.geolocation) {

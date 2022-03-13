@@ -55,15 +55,6 @@ io.on('connection', (socket) => {
         callback();
     });
 
-    socket.on('typing', (username, callback) => {
-        const user = getUser(socket.id);
-
-        if (user) {
-            io.to(user.room).emit('typingUser', user.username);
-            callback();
-        }
-    });
-
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id);
 
